@@ -13,11 +13,11 @@ import service.UserService;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/auth")
-public class AuthController {
+@RequestMapping("/guest")
+public class GuestController {
     private final UserService userService;
 
-    public AuthController(UserService userService) {
+    public GuestController(UserService userService) {
         this.userService = userService;
     }
 
