@@ -1,5 +1,6 @@
 package controller;
 
+import DTOs.LoginDto;
 import domain.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,16 @@ public class UserController {
         return ResponseEntity.badRequest().body(false);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity loginUser(@Valid @RequestBody LoginDto user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+        }
+        if (userService.loginUser(user)) {
+            return ResponseEntity.ok().body(true);
+        }
+        return ResponseEntity.badRequest().body(false);
+    }
 
     @GetMapping("/all")
     public ResponseEntity getAllUsers() {

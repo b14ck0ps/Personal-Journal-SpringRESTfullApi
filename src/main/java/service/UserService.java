@@ -1,5 +1,6 @@
 package service;
 
+import DTOs.LoginDto;
 import domain.User;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
@@ -42,14 +43,23 @@ public class UserService {
 
     public User getByUsername(String username) {
         try {
-            User user = userRepository.findByUsername(username);
-            if (user != null) {
-                return user;
-            }
-            return null;
+            return userRepository.findByUsername(username);
         } catch (Exception e) {
             logger.warning(e.getMessage());
             return null;
+        }
+    }
+
+    public boolean loginUser(LoginDto user) {
+        try {
+            User userFromDb = userRepository.findByUsername(user.getUsername());
+            if (userFromDb != null) {
+                return userFromDb.getPassword().equals(user.getPassword());
+            }
+            return false;
+        } catch (Exception e) {
+            logger.warning(e.getMessage());
+            return false;
         }
     }
 }
