@@ -2,6 +2,7 @@ package repository;
 
 import domain.JournalEntry;
 import interfaces.IRepository;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -52,8 +53,10 @@ public class JournalEntryRepository implements IRepository<JournalEntry, Boolean
 
     public List<JournalEntry> findAllByUserName(String username) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from JournalEntry where JournalEntry.user.username = :username", JournalEntry.class)
-                .setParameter("username", username)
-                .list();
+        Query<JournalEntry> query = session.createQuery("SELECT je FROM JournalEntry je WHERE je.user.username = :username", JournalEntry.class);
+        query.setParameter("username", username);
+        List<JournalEntry> journalEntries = query.getResultList();
+        return journalEntries;
     }
+
 }
