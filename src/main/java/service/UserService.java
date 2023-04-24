@@ -62,4 +62,33 @@ public class UserService {
             return false;
         }
     }
+
+    public boolean deleteUser(int id) {
+        try {
+            userRepository.delete(userRepository.findById(id));
+            return true;
+        } catch (Exception e) {
+            logger.warning(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean updateUser(User user) {
+        try {
+            userRepository.update(user);
+            return true;
+        } catch (Exception e) {
+            logger.warning(e.getMessage());
+            return false;
+        }
+    }
+
+    public User getUserById(int id) {
+        try {
+            return userRepository.findById(id);
+        } catch (Exception e) {
+            logger.warning(e.getMessage());
+            return null;
+        }
+    }
 }

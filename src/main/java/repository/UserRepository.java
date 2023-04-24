@@ -26,23 +26,30 @@ public class UserRepository implements IRepository<User, Boolean> {
 
     @Override
     public Boolean update(User entity) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        session.update(entity);
+        return true;
     }
 
     @Override
     public Boolean delete(User entity) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(entity);
+        return true;
     }
 
     @Override
     public User findById(int id) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(User.class, id);
     }
 
     @Override
     public List<User> findAll() {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from User", User.class).list();
     }
+
     public User findByUsername(String username) {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from User where username = :username", User.class).setParameter("username", username).uniqueResult();
