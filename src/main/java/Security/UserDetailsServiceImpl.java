@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import service.UserService;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -24,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User not found: " + username);
         }
 
-        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("user"));
+        List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("user"));
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(), user.getPassword(), authorities
         );

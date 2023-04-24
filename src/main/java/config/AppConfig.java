@@ -19,7 +19,7 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
-@ComponentScan({"security", "controller", "service", "repository"})
+@ComponentScan({"Security", "controller", "service", "repository"})
 public class AppConfig {
 
     private final Environment environment;
