@@ -1,10 +1,11 @@
 package domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "Journal_Entry_Tags")
-public class JournalEntryTag {
+public class JournalEntryTag implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
