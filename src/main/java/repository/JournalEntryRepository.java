@@ -41,7 +41,7 @@ public class JournalEntryRepository implements IRepository<JournalEntry, Boolean
     @Override
     public JournalEntry findById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(JournalEntry.class, id);
+        return session.createQuery("SELECT j FROM JournalEntry j JOIN FETCH j.user WHERE j.id = :id", JournalEntry.class).setParameter("id", id).uniqueResult();
     }
 
     @Override
