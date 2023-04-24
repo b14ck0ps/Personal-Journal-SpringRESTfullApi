@@ -48,12 +48,12 @@ public class JournalEntryRepository implements IRepository<JournalEntry, Boolean
     @Override
     public List<JournalEntry> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from JournalEntry", JournalEntry.class).list();
+        return session.createQuery("FROM JournalEntry j JOIN FETCH j.user", JournalEntry.class).list();
     }
 
     public List<JournalEntry> findAllByUserName(String username) {
         Session session = sessionFactory.getCurrentSession();
-        Query<JournalEntry> query = session.createQuery("SELECT je FROM JournalEntry je WHERE je.user.username = :username", JournalEntry.class);
+        Query<JournalEntry> query = session.createQuery("SELECT je FROM JournalEntry je JOIN FETCH je.user u WHERE u.username = :username", JournalEntry.class);
         query.setParameter("username", username);
         List<JournalEntry> journalEntries = query.getResultList();
         return journalEntries;
