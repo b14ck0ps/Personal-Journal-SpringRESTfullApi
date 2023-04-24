@@ -10,7 +10,7 @@ import service.UserService;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api")
 public class UserController {
     private final UserService userService;
 
@@ -18,7 +18,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/user")
     public ResponseEntity<?>  registerUser(@Valid @RequestBody User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
@@ -40,22 +40,22 @@ public class UserController {
         return ResponseEntity.badRequest().body(false);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/users")
     public ResponseEntity<?>  getAllUsers() {
         return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
-    @GetMapping("/get/{username}")
+    @GetMapping("/user/{username}")
     public ResponseEntity<?>  getUserByUsername(@PathVariable String username) {
         return ResponseEntity.ok().body(userService.getByUsername(username));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/user/{id}")
     public ResponseEntity<?>  deleteUserById(@PathVariable int id) {
         return ResponseEntity.ok().body(userService.deleteUser(id));
     }
 
-    @PutMapping("/update")
+    @PutMapping("/user")
     public ResponseEntity<?>  updateUser(@Valid @RequestBody User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());

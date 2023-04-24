@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/journalEntry")
+@RequestMapping("/api")
 public class JournalEntryController {
     private final JournalEntryService journalEntryService;
 
@@ -18,7 +18,7 @@ public class JournalEntryController {
         this.journalEntryService = journalEntryService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/journalEntry")
     public ResponseEntity<?> registerJournalEntry(@Valid @RequestBody JournalEntry journalEntry, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
@@ -27,7 +27,7 @@ public class JournalEntryController {
         return ResponseEntity.ok().body(true);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/journalEntry")
     public ResponseEntity<?> updateJournalEntry(@Valid @RequestBody JournalEntry journalEntry, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
@@ -36,25 +36,25 @@ public class JournalEntryController {
         return ResponseEntity.ok().body(true);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/journalEntry/{id}")
     public ResponseEntity<?> deleteJournalEntryById(@PathVariable int id) {
         journalEntryService.deleteJournalEntry(id);
         return ResponseEntity.ok().body(true);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/journalEntry/{id}")
     public ResponseEntity<?> getJournalEntryById(@PathVariable int id) {
         return ResponseEntity.ok().body(journalEntryService.getJournalEntryById(id));
     }
 
-    @GetMapping("/all")
+    @GetMapping("/journalEntry")
     public ResponseEntity<?> getAllJournalEntries() throws Exception {
         List<JournalEntry> journalEntries = journalEntryService.getAllJournalEntries();
         return ResponseEntity.ok().body(journalEntries);
     }
 
 
-    @GetMapping("/all/{username}")
+    @GetMapping("/journalEntry/username/{username}")
     public ResponseEntity<?> getAllJournalEntriesByUsername(@PathVariable String username) {
         return ResponseEntity.ok().body(journalEntryService.getAllJournalEntriesByUserName(username));
     }

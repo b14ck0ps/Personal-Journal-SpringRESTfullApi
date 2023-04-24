@@ -9,7 +9,7 @@ import service.JournalEntryTagsService;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/journalEntryTags")
+@RequestMapping("/api")
 public class JournalEntryTagsController {
     private final JournalEntryTagsService journalEntryTagsService;
 
@@ -17,7 +17,7 @@ public class JournalEntryTagsController {
         this.journalEntryTagsService = journalEntryTagsService;
     }
 
-    @PostMapping("/addTagToJournal")
+    @PostMapping("/journalEntryTag")
     public ResponseEntity<?> addTagToJournal(@Valid @RequestBody JournalEntryTag journalEntryTags, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getFieldError().getDefaultMessage());
@@ -29,7 +29,7 @@ public class JournalEntryTagsController {
         }
     }
 
-    @DeleteMapping("/removeTagFromJournal")
+    @DeleteMapping("/journalEntryTag")
     public ResponseEntity<?> removeTagFromJournal(@Valid @RequestBody JournalEntryTag journalEntryTags, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getFieldError().getDefaultMessage());
@@ -41,7 +41,7 @@ public class JournalEntryTagsController {
         }
     }
 
-    @GetMapping("/getByJournalEntryId/{id}")
+    @GetMapping("/journalEntryTag/{id}")
     public ResponseEntity<?> getTagsByJournalEntryId(@PathVariable int id) {
         try {
             return ResponseEntity.ok().body(journalEntryTagsService.getTagsByJournalEntryId(id));
@@ -50,7 +50,7 @@ public class JournalEntryTagsController {
         }
     }
 
-    @GetMapping("/getAllTags")
+    @GetMapping("/journalEntryTags")
     public ResponseEntity<?> getAllTags() {
         try {
             return ResponseEntity.ok().body(journalEntryTagsService.getAllTags());
