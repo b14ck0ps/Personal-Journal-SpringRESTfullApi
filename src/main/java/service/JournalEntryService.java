@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import repository.JournalEntryRepository;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -59,16 +60,20 @@ public class JournalEntryService {
 
     public List<JournalEntry> getAllJournalEntries() {
         try {
-            return journalEntryRepository.findAll();
-
+            List<JournalEntry> journalEntries = journalEntryRepository.findAll();
+            Collections.reverse(journalEntries);
+            return journalEntries;
         } catch (Exception e) {
             return null;
         }
     }
 
+
     public List<JournalEntry> getAllJournalEntriesByUserName(String username) {
         try {
-            return journalEntryRepository.findAllByUserName(username);
+            List journalEntries = journalEntryRepository.findAllByUserName(username);
+            Collections.reverse(journalEntries);
+            return journalEntries;
 
         } catch (Exception e) {
             return null;
