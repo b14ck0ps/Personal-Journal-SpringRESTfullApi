@@ -1,6 +1,7 @@
 package service;
 
 import DTOs.JournalEntryDto;
+import DTOs.JournalEntryTagDto;
 import domain.JournalEntry;
 import domain.JournalEntryTag;
 import domain.Tag;
@@ -10,6 +11,7 @@ import repository.JournalEntryRepository;
 import repository.JournalEntryTagsRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -83,26 +85,53 @@ public class JournalEntryService {
         }
     }
 
-    public List<JournalEntry> getAllJournalEntries() {
+    public JournalEntryTagDto getJournalEntryTagById(int id) {
+        try {
+            return journalEntryTagsRepository.findByJournalEntryId(id).get(0);
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public List<JournalEntryDto> getAllJournalEntries() {
         try {
             List<JournalEntry> journalEntries = journalEntryRepository.findAll();
-            Collections.reverse(journalEntries);
-            return journalEntries;
+            return getJournalEntryDtos(journalEntries);
         } catch (Exception e) {
             return null;
         }
     }
 
 
-    public List<JournalEntry> getAllJournalEntriesByUserName(String username) {
+    public List<JournalEntryDto> getAllJournalEntriesByUserName(String username) {
         try {
-            List journalEntries = journalEntryRepository.findAllByUserName(username);
-            Collections.reverse(journalEntries);
-            return journalEntries;
+            List<JournalEntry> journalEntries = journalEntryRepository.findAllByUserName(username);
+            return getJournalEntryDtos(journalEntries);
 
         } catch (Exception e) {
             return null;
         }
+    }
+
+    private List<JournalEntryDto> getJournalEntryDtos(List<JournalEntry> journalEntries) {
+        Collections.reverse(journalEntries);
+        List<JournalEntryDto> journalEntryDtos = new ArrayList<>();
+        for (JournalEntry journalEntry : journalEntries) {
+            JournalEntryDto journalEntryDto = new JournalEntryDto();
+            journalEntryDto.setId(journalEntry.getId());
+            journalEntryDto.setTitle(journalEntry.getTitle());
+            journalEntryDto.setBody(journalEntry.getBody());
+            journalEntryDto.setUsername(journalEntry.getUser().getUsername());
+            journalEntryDto.setCreatedAt(journalEntry.getCreatedAt());
+            journalEntryDto.setUpdatedAt(journalEntry.getUpdatedAt());
+            JournalEntryTagDto journalEntryTag = getJournalEntryTagById(journalEntry.getId());
+            journalEntryDto.setTagId(journalEntryTag.getTagId());
+            journalEntryDto.setTagName(tagService.getTagById(journalEntryTag.getTagId()).getName());
+            journalEntryDtos.add(journalEntryDto);
+        }
+
+        return journalEntryDtos;
     }
 
 }

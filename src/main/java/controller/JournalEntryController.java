@@ -50,7 +50,7 @@ public class JournalEntryController {
 
     @GetMapping("/journalEntry")
     public ResponseEntity<?> getAllJournalEntries() throws Exception {
-        List<JournalEntry> journalEntries = journalEntryService.getAllJournalEntries();
+        List<JournalEntryDto> journalEntries = journalEntryService.getAllJournalEntries();
         return ResponseEntity.ok().body(journalEntries);
     }
 
