@@ -1,5 +1,6 @@
 package controller;
 
+import DTOs.JournalEntryDto;
 import domain.JournalEntry;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,7 +20,7 @@ public class JournalEntryController {
     }
 
     @PostMapping("/journalEntry")
-    public ResponseEntity<?> registerJournalEntry(@Valid @RequestBody JournalEntry journalEntry, BindingResult bindingResult) {
+    public ResponseEntity<?> registerJournalEntry(@Valid @RequestBody JournalEntryDto journalEntry, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }

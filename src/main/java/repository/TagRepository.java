@@ -34,7 +34,8 @@ public class TagRepository implements IRepository<Tag, Boolean> {
 
     @Override
     public Tag findById(int id) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Tag.class, id);
     }
 
     @Override

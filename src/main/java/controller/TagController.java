@@ -2,6 +2,7 @@ package controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import service.TagService;
@@ -21,6 +22,15 @@ public class TagController {
             return ResponseEntity.ok().body(tagService.getAllTags());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("No tags found");
+        }
+    }
+
+    @GetMapping("/tags/{id}")
+    public ResponseEntity<?> getTagById(@PathVariable int id) {
+        try {
+            return ResponseEntity.ok().body(tagService.getTagById(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("No tag found");
         }
     }
 }

@@ -24,4 +24,13 @@ public class TagService {
             return null;
         }
     }
+
+    public Tag getTagById(int id) {
+        try {
+            return tagRepository.findById(id);
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
