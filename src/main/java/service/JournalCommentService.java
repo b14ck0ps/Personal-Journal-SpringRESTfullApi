@@ -55,6 +55,8 @@ public class JournalCommentService {
     private JournalCommentDto convertToDto(JournalEntryComment journalEntryComment) {
         JournalCommentDto journalCommentDto = new JournalCommentDto();
         journalCommentDto.setId(journalEntryComment.getId());
+        journalCommentDto.setUserImage(journalEntryComment.getUser().getImage());
+        journalCommentDto.setUsername(journalEntryComment.getUser().getUsername());
         journalCommentDto.setBody(journalEntryComment.getBody());
         journalCommentDto.setJournal_entry_id(journalEntryComment.getJournalEntry().getId());
         journalCommentDto.setUser_id(journalEntryComment.getUser().getId());

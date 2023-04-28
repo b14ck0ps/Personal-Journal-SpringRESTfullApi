@@ -4,9 +4,11 @@ import java.time.LocalDateTime;
 
 public class JournalCommentDto {
     private int id;
+    private String Username;
     private String body;
     private int journal_entry_id;
     private int user_id;
+    private String userImage;
 
     private LocalDateTime created_at = LocalDateTime.now();
 
@@ -51,5 +53,21 @@ public class JournalCommentDto {
 
     public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;
+    }
+
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String username) {
+        Username = username;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 }
