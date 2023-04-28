@@ -1,5 +1,6 @@
 package controller;
 
+import DTOs.JournalCommentDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.JournalCommentService;
@@ -19,7 +20,7 @@ public class JournalCommentController {
     }
 
     @PostMapping("/journal-comments")
-    public ResponseEntity<?> save(domain.JournalEntryComment entity) {
+    public ResponseEntity<?> save(@RequestBody JournalCommentDto entity) {
         return ResponseEntity.ok().body(journalCommentService.save(entity));
     }
 

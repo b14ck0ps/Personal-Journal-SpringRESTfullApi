@@ -13,13 +13,17 @@ import java.util.stream.Collectors;
 @Transactional
 public class JournalCommentService {
     private final JournalCommentRepository journalCommentRepository;
+    private final UserService userService;
+    private final JournalEntryService journalEntryService;
 
-    public JournalCommentService(JournalCommentRepository journalCommentRepository) {
+    public JournalCommentService(JournalCommentRepository journalCommentRepository, UserService userService, JournalEntryService journalEntryService) {
         this.journalCommentRepository = journalCommentRepository;
+        this.userService = userService;
+        this.journalEntryService = journalEntryService;
     }
 
-    public Boolean save(JournalEntryComment entity) {
-        return journalCommentRepository.save(entity);
+    public Boolean save(JournalCommentDto entity) {
+        return journalCommentRepository.save(convertToEntity(entity));
     }
 
     public Boolean update(JournalEntryComment entity) {
@@ -56,5 +60,15 @@ public class JournalCommentService {
         journalCommentDto.setUser_id(journalEntryComment.getUser().getId());
         journalCommentDto.setCreated_at(journalEntryComment.getCreatedAt());
         return journalCommentDto;
+    }
+
+    private JournalEntryComment convertToEntity(JournalCommentDto journalCommentDto) {
+        JournalEntryComment journalEntryComment = new JournalEntryComment();
+        journalEntryComment.setId(journalCommentDto.getId());
+        journalEntryComment.setBody(journalCommentDto.getBody());
+        journalEntryComment.setJournalEntry(journalEntryService.getJournalEntryById(journalCommentDto.getJournal_entry_id()));
+        journalEntryComment.setUser(userService.getUserById(journalCommentDto.getUser_id()));
+        journalEntryComment.setCreatedAt(journalCommentDto.getCreated_at());
+        return journalEntryComment;
     }
 }
