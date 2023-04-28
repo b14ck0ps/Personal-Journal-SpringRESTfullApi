@@ -34,4 +34,9 @@ public class JournalCommentController {
         return ResponseEntity.ok().body(journalCommentService.delete(id));
     }
 
+    @PutMapping("/journal-comments")
+    public ResponseEntity<?> update(@RequestBody JournalCommentDto entity) {
+        return ResponseEntity.ok().body(journalCommentService.update(entity));
+    }
+
 }

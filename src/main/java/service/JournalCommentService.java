@@ -26,8 +26,8 @@ public class JournalCommentService {
         return journalCommentRepository.save(convertToEntity(entity));
     }
 
-    public Boolean update(JournalEntryComment entity) {
-        return journalCommentRepository.update(entity);
+    public Boolean update(JournalCommentDto entity) {
+        return journalCommentRepository.update(convertToEntity(entity));
     }
 
     public Boolean delete(int id) {
