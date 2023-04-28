@@ -30,8 +30,8 @@ public class JournalCommentService {
         return journalCommentRepository.update(entity);
     }
 
-    public Boolean delete(JournalEntryComment entity) {
-        return journalCommentRepository.delete(entity);
+    public Boolean delete(int id) {
+        return journalCommentRepository.delete(findById(id));
     }
 
     public JournalEntryComment findById(int id) {

@@ -29,4 +29,9 @@ public class JournalCommentController {
         return ResponseEntity.ok().body(journalCommentService.findAllByJournalEntryId(journalId));
     }
 
+    @DeleteMapping("/journal-comments/{id}")
+    public ResponseEntity<?> delete(@PathVariable int id) {
+        return ResponseEntity.ok().body(journalCommentService.delete(id));
+    }
+
 }
