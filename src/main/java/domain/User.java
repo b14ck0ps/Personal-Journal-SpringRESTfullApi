@@ -1,6 +1,9 @@
 package domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @Entity
@@ -14,15 +17,20 @@ public class User implements Serializable {
     @Column(unique = true)
     private String username;
 
+    @NotBlank
     private String password;
 
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z ]+$")
     private String name;
-
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z0-9 .,]+$")
     private String address;
 
     @Column(unique = true)
+    @Email
     private String email;
-
+    @NotBlank
     private String image;
 
     public User() {

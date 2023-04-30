@@ -1,12 +1,15 @@
 package DTOs;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 public class JournalEntryDto {
     private int id;
     private String username;
     private String userImage;
+    @NotBlank
     private String title;
+    @NotBlank
     private String body;
 
     private int tagId;

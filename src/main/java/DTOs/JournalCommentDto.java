@@ -1,10 +1,12 @@
 package DTOs;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 public class JournalCommentDto {
     private int id;
     private String Username;
+    @NotBlank
     private String body;
     private int journal_entry_id;
     private int user_id;
