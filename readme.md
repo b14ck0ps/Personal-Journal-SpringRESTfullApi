@@ -67,6 +67,8 @@ CREATE TABLE Journal_Entry_Comments
     FOREIGN KEY (user_id) REFERENCES User (id),
     FOREIGN KEY (journal_entry_id) REFERENCES Journal_Entry (id)
 );
+ALTER TABLE `journal_entry`
+    ADD COLUMN `isDeleted` BOOLEAN NOT NULL DEFAULT false;
 ```
 
 ## Usage
