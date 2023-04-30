@@ -7,9 +7,11 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Repository
 public class JournalEntryRepository implements IRepository<JournalEntry, Boolean> {
+    private Logger logger = Logger.getLogger(JournalEntryRepository.class.getName());
     private final SessionFactory sessionFactory;
 
     public JournalEntryRepository(SessionFactory sessionFactory) {
@@ -19,40 +21,73 @@ public class JournalEntryRepository implements IRepository<JournalEntry, Boolean
 
     @Override
     public Boolean save(JournalEntry entity) {
-        Session session = sessionFactory.getCurrentSession();
-        session.save(entity);
-        return true;
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            session.save(entity);
+            logger.info("JournalEntry saved: " + entity);
+            return true;
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+            return false;
+        }
     }
 
     @Override
     public Boolean update(JournalEntry entity) {
-        Session session = sessionFactory.getCurrentSession();
-        session.update(entity);
-        return true;
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            session.update(entity);
+            logger.info("JournalEntry updated: " + entity);
+            return true;
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+            return false;
+        }
     }
 
     @Override
     public Boolean delete(JournalEntry entity) {
-        Session session = sessionFactory.getCurrentSession();
-        session.delete(entity);
-        return true;
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            session.delete(entity);
+            logger.info("JournalEntry deleted: " + entity);
+            return true;
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+            return false;
+        }
     }
 
     @Override
     public JournalEntry findById(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("SELECT j FROM JournalEntry j JOIN FETCH j.user WHERE j.id = :id", JournalEntry.class).setParameter("id", id).uniqueResult();
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            return session.createQuery("SELECT j FROM JournalEntry j JOIN FETCH j.user WHERE j.id = :id", JournalEntry.class).setParameter("id", id).uniqueResult();
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+            return null;
+        }
     }
 
     @Override
     public List<JournalEntry> findAll() {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM JournalEntry j JOIN FETCH j.user", JournalEntry.class).list();
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            return session.createQuery("FROM JournalEntry j JOIN FETCH j.user", JournalEntry.class).list();
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+            return null;
+        }
     }
 
     public List<JournalEntry> findAllByUserName(String username) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("SELECT je FROM JournalEntry je JOIN FETCH je.user u WHERE u.username = :username", JournalEntry.class).setParameter("username", username).getResultList();
+        try {
+            Session session = sessionFactory.getCurrentSession();
+            return session.createQuery("SELECT je FROM JournalEntry je JOIN FETCH je.user u WHERE u.username = :username", JournalEntry.class).setParameter("username", username).getResultList();
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+            return null;
+        }
     }
 
 }
