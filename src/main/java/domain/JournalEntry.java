@@ -31,6 +31,9 @@ public class JournalEntry implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "isDeleted")
+    private boolean isDeleted;
+
     public JournalEntry() {
     }
 
@@ -80,5 +83,13 @@ public class JournalEntry implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

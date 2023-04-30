@@ -68,7 +68,8 @@ public class JournalEntryService {
     public boolean deleteJournalEntry(int id) {
         try {
             JournalEntry journalEntry = journalEntryRepository.findById(id);
-            journalEntryRepository.delete(journalEntry);
+            journalEntry.setDeleted(true);
+            journalEntryRepository.update(journalEntry);
             return true;
 
         } catch (Exception e) {

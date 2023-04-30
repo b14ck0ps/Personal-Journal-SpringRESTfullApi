@@ -62,7 +62,7 @@ public class JournalEntryRepository implements IRepository<JournalEntry, Boolean
     public JournalEntry findById(int id) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            return session.createQuery("SELECT j FROM JournalEntry j JOIN FETCH j.user WHERE j.id = :id", JournalEntry.class).setParameter("id", id).uniqueResult();
+            return session.createQuery("SELECT j FROM JournalEntry j JOIN FETCH j.user WHERE j.id = :id AND j.isDeleted = false", JournalEntry.class).setParameter("id", id).uniqueResult();
         } catch (Exception e) {
             logger.severe(e.getMessage());
             return null;
@@ -73,7 +73,7 @@ public class JournalEntryRepository implements IRepository<JournalEntry, Boolean
     public List<JournalEntry> findAll() {
         try {
             Session session = sessionFactory.getCurrentSession();
-            return session.createQuery("FROM JournalEntry j JOIN FETCH j.user", JournalEntry.class).list();
+            return session.createQuery("FROM JournalEntry j JOIN FETCH j.user WHERE j.isDeleted = false AND j.isDeleted = false", JournalEntry.class).list();
         } catch (Exception e) {
             logger.severe(e.getMessage());
             return null;
@@ -83,7 +83,7 @@ public class JournalEntryRepository implements IRepository<JournalEntry, Boolean
     public List<JournalEntry> findAllByUserName(String username) {
         try {
             Session session = sessionFactory.getCurrentSession();
-            return session.createQuery("SELECT je FROM JournalEntry je JOIN FETCH je.user u WHERE u.username = :username", JournalEntry.class).setParameter("username", username).getResultList();
+            return session.createQuery("SELECT je FROM JournalEntry je JOIN FETCH je.user u WHERE u.username = :username AND je.isDeleted = false", JournalEntry.class).setParameter("username", username).getResultList();
         } catch (Exception e) {
             logger.severe(e.getMessage());
             return null;

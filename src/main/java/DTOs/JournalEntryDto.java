@@ -15,6 +15,8 @@ public class JournalEntryDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    private boolean isDeleted;
+
     public JournalEntryDto() {
     }
 
@@ -80,5 +82,13 @@ public class JournalEntryDto {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }
