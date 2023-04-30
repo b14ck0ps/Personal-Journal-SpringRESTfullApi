@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class JournalEntryDto {
     private int id;
     private String username;
+    private String userImage;
     private String title;
     private String body;
 
@@ -90,5 +91,13 @@ public class JournalEntryDto {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 }

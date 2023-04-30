@@ -124,6 +124,7 @@ public class JournalEntryService {
             journalEntryDto.setTitle(journalEntry.getTitle());
             journalEntryDto.setBody(journalEntry.getBody());
             journalEntryDto.setUsername(journalEntry.getUser().getUsername());
+            journalEntryDto.setUserImage(journalEntry.getUser().getImage());
             journalEntryDto.setCreatedAt(journalEntry.getCreatedAt());
             journalEntryDto.setUpdatedAt(journalEntry.getUpdatedAt());
             JournalEntryTagDto journalEntryTag = getJournalEntryTagById(journalEntry.getId());
