@@ -1,10 +1,7 @@
 package config;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -19,7 +16,8 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
-@ComponentScan({"Security", "controller", "service", "repository"})
+@ComponentScan({"Security", "controller", "service", "repository", "aspect"})
+@EnableAspectJAutoProxy
 public class AppConfig {
 
     private final Environment environment;
