@@ -2,6 +2,7 @@ package service;
 
 import DTOs.LoginDto;
 import domain.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
 
@@ -25,6 +26,10 @@ public class UserService {
     public boolean registerUser(User user) {
         try {
             if (!isImageValid(user.getImage())) user.setImage(defaultImage);
+            //use bcrypt to hash the password
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
             userRepository.save(user);
             return true;
 
@@ -58,7 +63,8 @@ public class UserService {
         try {
             User userFromDb = userRepository.findByUsername(user.getUsername());
             if (userFromDb != null) {
-                return userFromDb.getPassword().equals(user.getPassword());
+                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                return passwordEncoder.matches(user.getPassword(), userFromDb.getPassword());
             }
             return false;
         } catch (Exception e) {
@@ -79,14 +85,30 @@ public class UserService {
 
     public boolean updateUser(User user) {
         try {
-            if (!isImageValid(user.getImage())) user.setImage(defaultImage);
-            userRepository.update(user);
-            return true;
+            User existingUser = userRepository.findById(user.getId());
+
+            if (existingUser != null) {
+                if (!isImageValid(user.getImage())) existingUser.setImage(defaultImage);
+                if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+                    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                    String hashedPassword = passwordEncoder.encode(user.getPassword());
+                    existingUser.setPassword(hashedPassword);
+                } else {
+                    user.setPassword(userRepository.findById(user.getId()).getPassword());
+                }
+                existingUser.setName(user.getName());
+                existingUser.setAddress(user.getAddress());
+                existingUser.setEmail(user.getEmail());
+                userRepository.update(existingUser);
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             logger.warning(e.getMessage());
             return false;
         }
     }
+
 
     public User getUserById(int id) {
         try {

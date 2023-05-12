@@ -3,6 +3,7 @@ package domain;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
@@ -17,7 +18,7 @@ public class User implements Serializable {
     @Column(unique = true)
     private String username;
 
-    @NotBlank
+    @NotNull
     private String password;
 
     @NotBlank
